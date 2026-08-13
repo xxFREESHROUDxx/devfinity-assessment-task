@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mountains of Nepal</title>
 
-    <!-- Montserrat: 300 (display), 400 (body), 600 (button), 700 (card titles) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,24 +15,16 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="page">
-      <!-- ============================================================
-         Decorative scenery (Figma: Layer_1, Rectangle 19702,
-         Diagonal Rectangles, Group 1). Purely presentational.
-         ============================================================ -->
+    <main class="container">
+      <!-- Scenery -->
       <div class="scenery" aria-hidden="true">
-        <!-- Figma: Layer_1 — topographic contour pattern -->
         <div class="scenery__topo"></div>
-
-        <!-- Figma: Rectangle 19702 — faint diagonal gradient band -->
         <div class="scenery__band"></div>
 
-        <!-- Figma: Diagonal Rectangles 19704–19706 — translucent white streaks -->
         <div class="scenery__streak scenery__streak--a"></div>
         <div class="scenery__streak scenery__streak--b"></div>
         <div class="scenery__streak scenery__streak--c"></div>
 
-        <!-- Figma: Group 1 — golden chevron column -->
         <div class="scenery__chevrons">
           <img src="assets/golden-mountain-icon.png" alt="" width="56" height="51" />
           <img src="assets/golden-mountain-icon.png" alt="" width="56" height="51" />
@@ -43,19 +34,16 @@
         </div>
       </div>
 
-      <!-- Figma: Mountain Lake — Everest base-camp panorama,
-         clipped with a diagonal right edge -->
+      <!-- Photos -->
       <figure class="photo photo--basecamp">
         <img src="assets/everest-base-camp.png" alt="" />
       </figure>
 
-      <!-- Figma: Excel — Matterhorn-style peak inside the tall trapezoid,
-         with the red gradient backdrop peeking out top-left -->
       <figure class="photo photo--peak">
         <img src="assets/klausdie-mountain.png" alt="" />
       </figure>
 
-      <!-- Figma: Frame 812139 — intro heading + paragraph -->
+      <!-- Intro -->
       <header class="intro">
         <h1 class="intro__title">Lorem Ipsum</h1>
         <p class="intro__text">
@@ -65,13 +53,12 @@
         </p>
       </header>
 
-      <!-- Figma: Gradient Shapes + Fractional frames — each card owns its
-         shape (::before) and its own content, so nothing overlaps oddly -->
+      <!-- Mountain cards -->
       <section class="mountains" aria-label="Mountains of Nepal">
         <article class="card card--everest">
           <div class="card__body">
             <h2 class="card__title">Mount Everest</h2>
-            <p class="card__text">Earth's highest from<br />sea level.</p>
+            <p class="card__text">Earth's highest from <br />sea level.</p>
             <a class="btn" href="#">Visit Mountain</a>
           </div>
         </article>
@@ -79,7 +66,7 @@
         <article class="card card--dhaulagiri">
           <div class="card__body">
             <h2 class="card__title">Dhaulagiri</h2>
-            <p class="card__text">Located in Nepal, is the<br />seventh highest mountain</p>
+            <p class="card__text">Located in Nepal, is the <br />seventh highest mountain</p>
             <a class="btn" href="#">Visit Mountain</a>
           </div>
         </article>
@@ -87,7 +74,7 @@
         <article class="card card--kanchenjunga">
           <div class="card__body">
             <h2 class="card__title">Kanchenjunga</h2>
-            <p class="card__text">Northern Kanchenjunga<br />3rd highest on Earth</p>
+            <p class="card__text">Northern Kanchenjunga <br />3rd highest on Earth</p>
             <a class="btn" href="#">Visit Mountain</a>
           </div>
         </article>
@@ -95,7 +82,7 @@
         <article class="card card--langtang">
           <div class="card__body">
             <h2 class="card__title">Langtang</h2>
-            <p class="card__text">Is the highest peak of<br />the Langtang Himal</p>
+            <p class="card__text">Is the highest peak of <br />the Langtang Himal</p>
             <a class="btn" href="#">Visit Mountain</a>
           </div>
         </article>
@@ -103,7 +90,7 @@
         <article class="card card--machhapuchhare">
           <div class="card__body">
             <h2 class="card__title">Machhapuchhare</h2>
-            <p class="card__text">Situated in the Annapurna<br />massif of Gandaki Province</p>
+            <p class="card__text">Situated in the Annapurna <br />massif of Gandaki Province</p>
             <a class="btn" href="#">Visit Mountain</a>
           </div>
         </article>

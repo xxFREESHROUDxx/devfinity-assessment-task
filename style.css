@@ -1,50 +1,19 @@
-/* ============================================================================
-   Mountains of Nepal — desktop (1920 × 2301 design frame)
-
-   Geometry notes
-   --------------
-   Every diagonal in this design belongs to one ~24° family:
-     "\" edges (cards, gradient band, base-camp clip)  → dx/dy ≈ +0.435
-     "/" edges (peak trapezoid, white streaks)         → dx/dy ≈ −0.436
-   Shapes are built with clip-path / skewX so the raw photos stay rectangular.
-
-   Layer stack (z-index scale)
-   ---------------------------
-   0  topo pattern + gradient band          (Layer_1, Rectangle 19702)
-   1  base-camp photo                       (Mountain Lake)
-   2  card gradient shapes                  (Gradient Shapes)  ← on ::before
-   3  peak trapezoid photo                  (Excel)
-   4  white diagonal streaks                (Rectangles 19704–06)
-   5  intro text + chevrons                 (Frame 812139, Group 1)
-   6  card body content                     (Fractional frames)
-
-   The card shape lives on .card::before (clip-path creates a stacking
-   context; keeping it off the <article> lets .card__body z-index into the
-   root context, above the streaks, while the shape itself stays below the
-   peak photo).
-   ========================================================================== */
-
 :root {
-  /* Palette (Figma color styles) */
-  --snowfall-white: #f5f7f8; /* page background   — Pantone 11-4601   */
-  --apple-white: #ffffff; /* card body text    — Pantone 11-0601   */
-  --slate: #476480; /* card gradient end                     */
-  --flame: #f94216; /* card gradient start                   */
-  --crimson: #b92031; /* photo backdrop gradient end           */
-  --steel: #466481; /* heading gradient start                */
-  --heading-red: #ba0c2f; /* heading gradient end                  */
-  --sweet-blue: #a6c9e7; /* card titles                           */
-  --golden-road: #eaaa00; /* buttons, chevrons — Pantone 124 C     */
-  --black-magic: #302f31; /* button label                          */
+  --snowfall-white: #f5f7f8;
+  --apple-white: #ffffff;
+  --slate: #476480;
+  --flame: #f94216;
+  --crimson: #b92031;
+  --steel: #466481;
+  --heading-red: #ba0c2f;
+  --sweet-blue: #a6c9e7;
+  --golden-road: #eaaa00;
+  --black-magic: #302f31;
 
   --font-sans: "Montserrat", sans-serif;
 
-  /* Shared diagonal geometry */
-  --card-skew: 147px; /* horizontal run of a card's left edge over
-                                its 339px height (338.97 × 0.4348)      */
+  --gutter: clamp(20px, 5vw, 40px);
 }
-
-/* ---- Minimal reset ------------------------------------------------------ */
 
 *,
 *::before,
@@ -60,30 +29,23 @@ img {
 }
 
 body {
+  container-type: inline-size;
   font-family: var(--font-sans);
   background: var(--snowfall-white);
-  overflow-x: hidden; /* prevents the skewed shapes from creating a horizontal scrollbar */
+  overflow-x: hidden;
 }
 
-/* ---- Page frame ---------------------------------------------------------
-   Fixed 1920px canvas for the pixel-perfect desktop pass.
-   (Responsive breakpoints come in the next phase.)                        */
+/* Container */
 
-.page {
+.container {
   position: relative;
-  width: 1920px;
-  height: 2301px;
-  margin-inline: auto;
-  overflow: hidden;
-  background: var(--snowfall-white);
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
 }
 
-/* ============================================================================
-   SCENERY — decorative layers
-   ========================================================================== */
+/* Scenery Section */
 
-/* Figma: Layer_1 — topographic contours.
-   Export is at full line strength; the design shows it at 15%.            */
 .scenery__topo {
   position: absolute;
   inset: 0;
@@ -92,153 +54,77 @@ body {
   opacity: 0.15;
 }
 
-/* Figma: Rectangle 19702 — wide gradient band, 20% opacity.
-   Original: 200 × 3418px rect rotated ~24°; rebuilt as a skewed full-height
-   bar. Left edge crosses y=0 at x=573; horizontal width 221px
-   (= 200 / cos 24°). Gradient stops are extended past the element so the
-   visible segment shows the same slice of the slate→flame ramp as the
-   3418px original did within the frame.                                   */
 .scenery__band {
   position: absolute;
   top: 0;
-  left: 573px;
+  left: 30%;
   z-index: 0;
-  width: 221px;
-  height: 100%;
+  width: 26%;
+  height: clamp(420px, 110vw, 760px);
   background: linear-gradient(to top, var(--slate) -19%, var(--flame) 130%);
   opacity: 0.2;
   transform: skewX(24.2deg);
   transform-origin: top left;
 }
 
-/* Figma: Rectangles 19704–06 — 10% white streaks, mirrored diagonal ("/").
-   Measured: left edges cross y=0 at 920 / 1664 / 1747; the b + c pair
-   overlaps, producing the brighter core seen in the design.               */
-.scenery__streak {
-  position: absolute;
-  top: 0;
-  z-index: 4;
-  width: 220px;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  transform: skewX(-24.1deg);
-  transform-origin: top left;
-}
-
-.scenery__streak--a {
-  left: 920px;
-}
-.scenery__streak--b {
-  left: 1678px;
-}
-.scenery__streak--c {
-  left: 1802px;
-}
-
-/* Figma: Group 1 — five golden chevrons down the left edge.
-   Offsets from Figma page-relative tops (3.45 / 9.95 / 17.17 / 24.38 /
-   31.59% of 2301px), rebased to the group's own origin.                   */
+/* Only show on desktop devices */
+.scenery__streak,
 .scenery__chevrons {
-  position: absolute;
-  top: 79px;
-  left: 192.5px;
-  z-index: 5;
-  width: 56px;
-  height: 698px;
+  display: none;
 }
 
-.scenery__chevrons img {
-  position: absolute;
-  left: 0;
-}
-
-.scenery__chevrons img:nth-child(1) {
-  top: 0;
-}
-.scenery__chevrons img:nth-child(2) {
-  top: 149.6px;
-}
-.scenery__chevrons img:nth-child(3) {
-  top: 315.7px;
-}
-.scenery__chevrons img:nth-child(4) {
-  top: 481.7px;
-}
-.scenery__chevrons img:nth-child(5) {
-  top: 647.6px;
-}
-
-/* ============================================================================
-   PHOTOS — rectangular images shaped by CSS clip-path
-   ========================================================================== */
+/* Photos Section */
 
 .photo {
-  position: absolute;
+  position: relative;
+  width: 100%;
 }
 
 .photo img {
-  position: relative; /* paints above the ::before backdrop */
+  position: relative;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* Backdrop gradients behind each photo (Figma: the "Vector 1" shapes) */
-.photo::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-}
-
-/* Figma: Mountain Lake — base-camp panorama.
-   Clip: top-right corner at 67.1%, diagonal "\" right edge (dx/dy 0.435)
-   reaching the box's right side at 93.5% of its height.                   */
 .photo--basecamp {
-  top: 932px;
-  left: 0;
+  order: 1;
+  margin-top: 20px;
   z-index: 1;
-  width: 1346px;
-  height: 1101px;
-  clip-path: polygon(0 0, 67.1% 0, 100% 93.5%, 100% 100%, 0 100%);
+  height: clamp(220px, 60vw, 420px);
 }
 
 .photo--basecamp::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   background: linear-gradient(109deg, var(--slate) 34.7%, var(--crimson) 110%);
 }
 
-/* Figma: Excel — peak photo trapezoid.
-   Photo clip: vertical right edge, "/" left edge from 65.8% (top) to
-   0.3% (bottom). The ::before is the red gradient triangle that peeks
-   out above-left of the photo ("\" edge at dx/dy +0.447, exiting the
-   right side at 80% height — everything below is covered by the photo). */
 .photo--peak {
-  top: 104px;
-  left: 268px;
   z-index: 3;
-  width: 815.4px;
-  height: 1226px;
+  height: clamp(280px, 60vw, 520px);
 }
 
 .photo--peak img {
-  clip-path: polygon(65.5% 0, 100% 0, 100% 100%, 0.3% 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 88%);
 }
 
-/* ============================================================================
-   INTRO — Figma: Frame 812139
+/* ==========================================================================
+   Intro
    ========================================================================== */
 
 .intro {
-  position: absolute;
-  top: 71px;
-  left: 1216px;
+  position: relative;
   z-index: 5;
-  width: 540px;
+  padding: clamp(28px, 7vw, 56px) var(--gutter);
 }
 
 .intro__title {
-  width: max-content; /* gradient spans exactly the text   */
-  margin-bottom: 50px;
-  font-size: 48px;
+  width: max-content;
+  max-width: 100%;
+  margin-bottom: clamp(16px, 4vw, 32px);
+  font-size: clamp(28px, 7vw, 44px);
   font-weight: 300;
   line-height: 1.2;
   background: linear-gradient(90deg, var(--steel) 0%, var(--heading-red) 100%);
@@ -249,89 +135,89 @@ body {
 }
 
 .intro__text {
-  font-size: 20px;
+  max-width: 760px;
+  font-size: clamp(15px, 3.4vw, 18px);
   line-height: 1.5;
-  text-align: justify;
   color: #000;
 }
 
-/* ============================================================================
-   MOUNTAIN CARDS — Figma: Gradient Shapes + Fractional frames
+/* ==========================================================================
+   Mountain cards
    ========================================================================== */
 
-/* Per-card geometry. All cards share the right edge (164px from the frame),
-   height, and left-edge slant; width / top / gradient come from Figma.     */
-.card {
-  --w: 0px;
-  --top: 0;
-  --grad: none;
-
-  position: absolute; /* no z-index here: lets the shape (::before) and the
-                         body live on different layers of the root stack   */
-  top: var(--top);
-  right: 164px;
-  width: var(--w);
-  height: 339px;
+.mountains {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 2.5vw, 18px);
 }
 
-/* The gradient shape: full card box with a slanted left edge */
+/* No z-index: keeps the shape (::before) and the body on separate layers of
+   the .container stacking context, so the body clears the streaks. */
+.card {
+  --card-skew: clamp(20px, 8vw, 40px);
+
+  position: relative;
+}
+
 .card::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: var(--grad);
+  background: linear-gradient(65deg, var(--flame) var(--g1), var(--slate) var(--g2));
   clip-path: polygon(0 0, 100% 0, 100% 100%, var(--card-skew) 100%);
 }
 
 .card--everest {
-  --top: 365px;
-  --w: 1358.62px;
-  --grad: linear-gradient(65deg, var(--flame) 14.58%, var(--slate) 51.56%);
+  --top: 365;
+  --w: 1358.62;
+  --g1: 14.58%;
+  --g2: 51.56%;
 }
 
 .card--dhaulagiri {
-  --top: 725px;
-  --w: 1201.04px;
-  --grad: linear-gradient(65deg, var(--flame) 17.58%, var(--slate) 60.69%);
+  --top: 725;
+  --w: 1201.04;
+  --g1: 17.58%;
+  --g2: 60.69%;
 }
 
 .card--kanchenjunga {
-  --top: 1086px;
-  --w: 1047.14px;
-  --grad: linear-gradient(65deg, var(--flame) 17.66%, var(--slate) 64.69%);
+  --top: 1086;
+  --w: 1047.14;
+  --g1: 17.66%;
+  --g2: 64.69%;
 }
 
 .card--langtang {
-  --top: 1446px;
-  --w: 891.39px;
-  --grad: linear-gradient(65deg, var(--flame) 19.36%, var(--slate) 74.94%);
+  --top: 1446;
+  --w: 891.39;
+  --g1: 19.36%;
+  --g2: 74.94%;
 }
 
 .card--machhapuchhare {
-  --top: 1807px;
-  --w: 735.45px;
-  --grad: linear-gradient(65deg, var(--flame) 24.04%, var(--slate) 94.09%);
+  --top: 1807;
+  --w: 735.45;
+  --g1: 24.04%;
+  --g2: 94.09%;
 }
 
-/* Card content — anchored to the shared 540px text column (x = 1216 on the
-   frame: every card's right edge sits at 1756, so right: 0 + width: 540px
-   lands all five bodies on the same vertical line).                        */
+/* padding-left clears the slanted edge at its widest (bottom) point. */
 .card__body {
-  position: absolute;
-  top: 50%;
-  right: 0;
+  position: relative;
   z-index: 6;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 20px;
-  width: 540px;
-  transform: translateY(-50%);
+  gap: clamp(12px, 3vw, 20px);
+  max-width: 800px;
+  padding: clamp(24px, 6vw, 40px) var(--gutter) clamp(24px, 6vw, 40px)
+    calc(var(--card-skew) + var(--gutter));
 }
 
 .card__title {
-  font-size: 36px;
+  font-size: clamp(20px, 5vw, 28px);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.05em;
@@ -340,10 +226,15 @@ body {
 }
 
 .card__text {
-  font-size: 32px;
+  font-size: clamp(16px, 4.2vw, 22px);
   font-weight: 400;
   line-height: 1.2;
   color: var(--apple-white);
+}
+
+/* The <br> is for desktop line breaks only. */
+.card__text br {
+  display: none;
 }
 
 /* ---- Button -------------------------------------------------------------- */
@@ -352,26 +243,201 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 190px;
-  height: 50px;
+  width: clamp(160px, 45vw, 190px);
+  height: clamp(44px, 12vw, 50px);
   background: var(--golden-road);
-  border-radius: 50px;
-  font-size: 20px;
+  border-radius: 999px;
+  font-size: clamp(15px, 3.8vw, 18px);
   font-weight: 600;
   line-height: 1.5;
   color: var(--black-magic);
   text-decoration: none;
-  transition:
-    filter 150ms ease,
-    transform 150ms ease;
 }
 
 .btn:hover {
   filter: brightness(1.06);
-  transform: translateY(-1px);
 }
 
 .btn:focus-visible {
   outline: 3px solid var(--black-magic);
   outline-offset: 2px;
+}
+
+/* ==========================================================================
+   --u is one design pixel: 1:1 at 1920px and proportional below, so every
+   offset below is the raw Figma number. cqw (not vw) because 100vw includes
+   the scrollbar, which would push the canvas past the usable width.
+   ========================================================================== */
+
+@media (min-width: 1280px) {
+  .container {
+    --u: min(1px, 0.0520833cqw);
+
+    display: block;
+    width: calc(1920 * var(--u));
+    height: calc(2301 * var(--u));
+    margin-inline: auto;
+  }
+
+  /* ---- Scenery ---- */
+
+  .scenery__band {
+    left: calc(573 * var(--u));
+    width: calc(221 * var(--u));
+    height: 100%;
+  }
+
+  .scenery__streak {
+    display: block;
+    position: absolute;
+    top: 0;
+    z-index: 4;
+    width: calc(220 * var(--u));
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: skewX(-24.1deg);
+    transform-origin: top left;
+  }
+
+  .scenery__streak--a {
+    left: calc(920 * var(--u));
+  }
+  .scenery__streak--b {
+    left: calc(1678 * var(--u));
+  }
+  .scenery__streak--c {
+    left: calc(1802 * var(--u));
+  }
+
+  .scenery__chevrons {
+    display: block;
+    position: absolute;
+    top: calc(79 * var(--u));
+    left: calc(192.5 * var(--u));
+    z-index: 5;
+    width: calc(56 * var(--u));
+    height: calc(698 * var(--u));
+  }
+
+  .scenery__chevrons img {
+    position: absolute;
+    left: 0;
+    width: calc(56 * var(--u));
+    height: calc(51 * var(--u));
+  }
+
+  .scenery__chevrons img:nth-child(1) {
+    top: 0;
+  }
+  .scenery__chevrons img:nth-child(2) {
+    top: calc(149.6 * var(--u));
+  }
+  .scenery__chevrons img:nth-child(3) {
+    top: calc(315.7 * var(--u));
+  }
+  .scenery__chevrons img:nth-child(4) {
+    top: calc(481.7 * var(--u));
+  }
+  .scenery__chevrons img:nth-child(5) {
+    top: calc(647.6 * var(--u));
+  }
+
+  /* ---- Photos ---- */
+
+  .photo {
+    position: absolute;
+  }
+
+  .photo--basecamp {
+    top: calc(932 * var(--u));
+    left: 0;
+    width: calc(1346 * var(--u));
+    height: calc(1101 * var(--u));
+    clip-path: polygon(0 0, 67.1% 0, 100% 93.5%, 100% 100%, 0 100%);
+  }
+
+  .photo--basecamp img {
+    clip-path: none;
+  }
+
+  .photo--peak {
+    top: calc(104 * var(--u));
+    left: calc(268 * var(--u));
+    width: calc(815.4 * var(--u));
+    height: calc(1226 * var(--u));
+  }
+
+  .photo--peak img {
+    clip-path: polygon(65.5% 0, 100% 0, 100% 100%, 0.3% 100%);
+  }
+
+  /* ---- Intro ---- */
+
+  .intro {
+    position: absolute;
+    top: calc(71 * var(--u));
+    left: calc(1216 * var(--u));
+    width: calc(540 * var(--u));
+    padding: 0;
+  }
+
+  .intro__title {
+    margin-bottom: calc(50 * var(--u));
+    font-size: calc(48 * var(--u));
+  }
+
+  .intro__text {
+    max-width: none;
+    font-size: calc(20 * var(--u));
+    text-align: justify;
+  }
+
+  /* ---- Cards ---- */
+
+  .mountains {
+    display: block;
+  }
+
+  .card {
+    --card-skew: calc(147 * var(--u));
+
+    position: absolute;
+    top: calc(var(--top) * var(--u));
+    right: calc(164 * var(--u));
+    width: calc(var(--w) * var(--u));
+    height: calc(339 * var(--u));
+  }
+
+  /* Every body lands on the shared text column: each card's right edge sits
+     at x = 1756, so right: 0 + a 540px width aligns all five. */
+  .card__body {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    gap: calc(20 * var(--u));
+    width: calc(540 * var(--u));
+    max-width: none;
+    padding: 0;
+    transform: translateY(-50%);
+  }
+
+  .card__title {
+    font-size: calc(36 * var(--u));
+  }
+
+  .card__text {
+    font-size: calc(32 * var(--u));
+  }
+
+  .card__text br {
+    display: inline;
+  }
+
+  /* ---- Button ---- */
+
+  .btn {
+    width: calc(190 * var(--u));
+    height: calc(50 * var(--u));
+    font-size: calc(20 * var(--u));
+  }
 }
