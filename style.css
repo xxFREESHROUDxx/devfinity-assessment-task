@@ -158,43 +158,47 @@ body {
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: linear-gradient(65deg, var(--flame) var(--g1), var(--slate) var(--g2));
+  background: linear-gradient(
+    65deg,
+    var(--flame) var(--card-gradient-start),
+    var(--slate) var(--card-gradient-end)
+  );
   clip-path: polygon(0 0, 100% 0, 100% 100%, var(--card-skew) 100%);
 }
 
 .card--everest {
-  --top: 365;
-  --w: 1358.62;
-  --g1: 14.58%;
-  --g2: 51.56%;
+  --card-top: 365;
+  --card-width: 1358.62;
+  --card-gradient-start: 14.58%;
+  --card-gradient-end: 51.56%;
 }
 
 .card--dhaulagiri {
-  --top: 725;
-  --w: 1201.04;
-  --g1: 17.58%;
-  --g2: 60.69%;
+  --card-top: 725;
+  --card-width: 1201.04;
+  --card-gradient-start: 17.58%;
+  --card-gradient-end: 60.69%;
 }
 
 .card--kanchenjunga {
-  --top: 1086;
-  --w: 1047.14;
-  --g1: 17.66%;
-  --g2: 64.69%;
+  --card-top: 1086;
+  --card-width: 1047.14;
+  --card-gradient-start: 17.66%;
+  --card-gradient-end: 64.69%;
 }
 
 .card--langtang {
-  --top: 1446;
-  --w: 891.39;
-  --g1: 19.36%;
-  --g2: 74.94%;
+  --card-top: 1446;
+  --card-width: 891.39;
+  --card-gradient-start: 19.36%;
+  --card-gradient-end: 74.94%;
 }
 
 .card--machhapuchhare {
-  --top: 1807;
-  --w: 735.45;
-  --g1: 24.04%;
-  --g2: 94.09%;
+  --card-top: 1807;
+  --card-width: 735.45;
+  --card-gradient-start: 24.04%;
+  --card-gradient-end: 94.09%;
 }
 
 /* padding-left clears the slanted edge at its widest (bottom) point. */
@@ -258,26 +262,26 @@ body {
 }
 
 /* ==========================================================================
-   --u is one design pixel: 1:1 at 1920px and proportional below, so every
+   --design-px is one design pixel: 1:1 at 1920px and proportional below, so every
    offset below is the raw Figma number. cqw (not vw) because 100vw includes
    the scrollbar, which would push the canvas past the usable width.
    ========================================================================== */
 
 @media (min-width: 1280px) {
   .container {
-    --u: min(1px, 0.0520833cqw);
+    --design-px: min(1px, 0.0520833cqw);
 
     display: block;
-    width: calc(1920 * var(--u));
-    height: calc(2301 * var(--u));
+    width: calc(1920 * var(--design-px));
+    height: calc(2301 * var(--design-px));
     margin-inline: auto;
   }
 
   /* Scenery Section */
 
   .scenery__band {
-    left: calc(573 * var(--u));
-    width: calc(221 * var(--u));
+    left: calc(573 * var(--design-px));
+    width: calc(221 * var(--design-px));
     height: 100%;
   }
 
@@ -286,7 +290,7 @@ body {
     position: absolute;
     top: 0;
     z-index: 4;
-    width: calc(220 * var(--u));
+    width: calc(220 * var(--design-px));
     height: 100%;
     background: rgba(255, 255, 255, 0.1);
     transform: skewX(-24.1deg);
@@ -294,13 +298,13 @@ body {
   }
 
   .scenery__streak--a {
-    left: calc(920 * var(--u));
+    left: calc(920 * var(--design-px));
   }
   .scenery__streak--b {
-    left: calc(1678 * var(--u));
+    left: calc(1678 * var(--design-px));
   }
   .scenery__streak--c {
-    left: calc(1802 * var(--u));
+    left: calc(1802 * var(--design-px));
   }
 
   /* Figma spaces the first two icons 99.38px apart and the rest 115.75px.
@@ -309,17 +313,17 @@ body {
   .scenery__chevrons {
     display: flex;
     flex-direction: column;
-    gap: calc(115.75 * var(--u));
+    gap: calc(115.75 * var(--design-px));
     position: absolute;
-    top: calc(79 * var(--u));
-    left: calc(192.5 * var(--u));
+    top: calc(79 * var(--design-px));
+    left: calc(192.5 * var(--design-px));
     z-index: 5;
-    width: calc(56 * var(--u));
+    width: calc(56 * var(--design-px));
   }
 
   .scenery__chevrons img {
-    width: calc(56 * var(--u));
-    height: calc(51 * var(--u));
+    width: calc(56 * var(--design-px));
+    height: calc(51 * var(--design-px));
   }
 
   /* Photos Section */
@@ -329,10 +333,10 @@ body {
   }
 
   .photo--basecamp {
-    top: calc(932 * var(--u));
+    top: calc(932 * var(--design-px));
     left: 0;
-    width: calc(1346 * var(--u));
-    height: calc(1101 * var(--u));
+    width: calc(1346 * var(--design-px));
+    height: calc(1101 * var(--design-px));
     clip-path: polygon(0 0, 67.1% 0, 100% 93.5%, 100% 100%, 0 100%);
   }
 
@@ -341,10 +345,10 @@ body {
   }
 
   .photo--peak {
-    top: calc(104 * var(--u));
-    left: calc(268 * var(--u));
-    width: calc(815.4 * var(--u));
-    height: calc(1226 * var(--u));
+    top: calc(104 * var(--design-px));
+    left: calc(268 * var(--design-px));
+    width: calc(815.4 * var(--design-px));
+    height: calc(1226 * var(--design-px));
   }
 
   .photo--peak img {
@@ -355,20 +359,20 @@ body {
 
   .intro {
     position: absolute;
-    top: calc(71 * var(--u));
-    left: calc(1216 * var(--u));
-    width: calc(540 * var(--u));
+    top: calc(71 * var(--design-px));
+    left: calc(1216 * var(--design-px));
+    width: calc(540 * var(--design-px));
     padding: 0;
   }
 
   .intro__title {
-    margin-bottom: calc(50 * var(--u));
-    font-size: calc(48 * var(--u));
+    margin-bottom: calc(50 * var(--design-px));
+    font-size: calc(48 * var(--design-px));
   }
 
   .intro__text {
     max-width: none;
-    font-size: calc(20 * var(--u));
+    font-size: calc(20 * var(--design-px));
     text-align: justify;
   }
 
@@ -379,13 +383,13 @@ body {
   }
 
   .card {
-    --card-skew: calc(147 * var(--u));
+    --card-skew: calc(147 * var(--design-px));
 
     position: absolute;
-    top: calc(var(--top) * var(--u));
-    right: calc(164 * var(--u));
-    width: calc(var(--w) * var(--u));
-    height: calc(339 * var(--u));
+    top: calc(var(--card-top) * var(--design-px));
+    right: calc(164 * var(--design-px));
+    width: calc(var(--card-width) * var(--design-px));
+    height: calc(339 * var(--design-px));
   }
 
   /* Every body lands on the shared text column: each card's right edge sits
@@ -394,19 +398,19 @@ body {
     position: absolute;
     top: 50%;
     right: 0;
-    gap: calc(20 * var(--u));
-    width: calc(540 * var(--u));
+    gap: calc(20 * var(--design-px));
+    width: calc(540 * var(--design-px));
     max-width: none;
     padding: 0;
     transform: translateY(-50%);
   }
 
   .card__title {
-    font-size: calc(36 * var(--u));
+    font-size: calc(36 * var(--design-px));
   }
 
   .card__text {
-    font-size: calc(32 * var(--u));
+    font-size: calc(32 * var(--design-px));
   }
 
   .card__text br {
@@ -416,8 +420,8 @@ body {
   /* Button */
 
   .btn {
-    width: calc(190 * var(--u));
-    height: calc(50 * var(--u));
-    font-size: calc(20 * var(--u));
+    width: calc(190 * var(--design-px));
+    height: calc(50 * var(--design-px));
+    font-size: calc(20 * var(--design-px));
   }
 }
