@@ -50,7 +50,7 @@ body {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: url("assets/vector-background.png") center / cover no-repeat;
+  background: url("assets/vector-background.webp") center / cover no-repeat;
   opacity: 0.15;
 }
 
@@ -110,9 +110,7 @@ body {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 88%);
 }
 
-/* ==========================================================================
-   Intro
-   ========================================================================== */
+/* Intro Section */
 
 .intro {
   position: relative;
@@ -141,9 +139,7 @@ body {
   color: #000;
 }
 
-/* ==========================================================================
-   Mountain cards
-   ========================================================================== */
+/* Mountain Cards */
 
 .mountains {
   display: flex;
@@ -151,8 +147,6 @@ body {
   gap: clamp(10px, 2.5vw, 18px);
 }
 
-/* No z-index: keeps the shape (::before) and the body on separate layers of
-   the .container stacking context, so the body clears the streaks. */
 .card {
   --card-skew: clamp(20px, 8vw, 40px);
 
@@ -237,7 +231,7 @@ body {
   display: none;
 }
 
-/* ---- Button -------------------------------------------------------------- */
+/* Button */
 
 .btn {
   display: inline-flex;
@@ -279,7 +273,7 @@ body {
     margin-inline: auto;
   }
 
-  /* ---- Scenery ---- */
+  /* Scenery Section */
 
   .scenery__band {
     left: calc(573 * var(--u));
@@ -309,40 +303,26 @@ body {
     left: calc(1802 * var(--u));
   }
 
+  /* Figma spaces the first two icons 99.38px apart and the rest 115.75px.
+     One consistent 115.75px gap reads better, so the stack is a flex column
+     and its height comes from the content instead of hard-coded offsets. */
   .scenery__chevrons {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: calc(115.75 * var(--u));
     position: absolute;
     top: calc(79 * var(--u));
     left: calc(192.5 * var(--u));
     z-index: 5;
     width: calc(56 * var(--u));
-    height: calc(698 * var(--u));
   }
 
   .scenery__chevrons img {
-    position: absolute;
-    left: 0;
     width: calc(56 * var(--u));
     height: calc(51 * var(--u));
   }
 
-  .scenery__chevrons img:nth-child(1) {
-    top: 0;
-  }
-  .scenery__chevrons img:nth-child(2) {
-    top: calc(149.6 * var(--u));
-  }
-  .scenery__chevrons img:nth-child(3) {
-    top: calc(315.7 * var(--u));
-  }
-  .scenery__chevrons img:nth-child(4) {
-    top: calc(481.7 * var(--u));
-  }
-  .scenery__chevrons img:nth-child(5) {
-    top: calc(647.6 * var(--u));
-  }
-
-  /* ---- Photos ---- */
+  /* Photos Section */
 
   .photo {
     position: absolute;
@@ -371,7 +351,7 @@ body {
     clip-path: polygon(65.5% 0, 100% 0, 100% 100%, 0.3% 100%);
   }
 
-  /* ---- Intro ---- */
+  /* Intro Section */
 
   .intro {
     position: absolute;
@@ -392,7 +372,7 @@ body {
     text-align: justify;
   }
 
-  /* ---- Cards ---- */
+  /* Cards Section */
 
   .mountains {
     display: block;
@@ -433,7 +413,7 @@ body {
     display: inline;
   }
 
-  /* ---- Button ---- */
+  /* Button */
 
   .btn {
     width: calc(190 * var(--u));
